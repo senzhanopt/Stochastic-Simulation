@@ -1,0 +1,102 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{parskip}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{subcaption}
+\usepackage{listings}
+\usepackage{url}
+\usepackage{caption}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{bm}
+\usepackage{float}
+\usepackage{fp}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{pdfpages}
+\usepackage[a4paper, hmargin={2.2cm, 2.2cm}, vmargin={2.2cm,2.2cm}]{geometry}
+\DeclareMathOperator{\E}{\mathbb{E}}
+\DeclareMathOperator{\Var}{\mathbb{V}}
+\DeclareMathOperator{\Cov}{\mathbb{C}\text{ov}}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{mwe}
+
+
+
+% Default fixed font does not support bold face
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{12} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{12}  % for normal
+
+% Custom colors
+\usepackage{color}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+\usepackage{listings}
+
+% Python style for highlighting
+\newcommand\pythonstyle{\lstset{
+language=Python,
+basicstyle=\ttm,
+otherkeywords={self},             % Add keywords here
+keywordstyle=\ttb\color{deepblue},
+emph={MyClass,__init__},          % Custom highlighting
+emphstyle=\ttb\color{deepred},    % Custom highlighting style
+stringstyle=\color{deepgreen},
+frame=tb,                         % Any extra options here
+showstringspaces=false            % 
+}}
+
+
+% Python environment
+\lstnewenvironment{python}[1][]
+{
+\pythonstyle
+\lstset{#1}
+}
+{}
+
+% Python for external files
+\newcommand\pythonexternal[2][]{{
+\pythonstyle
+\lstinputlisting[#1]{#2}}}
+
+% Python for inline
+\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+
+
+\title{Stochastic Simulation}
+\author{s164180 Qahir Yousefi\\ s181239 Sen Zhan}
+\date{June 2019}
+
+\begin{document}
+
+\maketitle
+
+\input{exercise1.tex}
+
+\input{exercise2.tex}
+
+\input{exercise3.tex}
+
+\input{exercise4.tex}
+
+\input{exercise5.tex}
+
+\input{exercise6.tex}
+
+\input{exercise7.tex}
+
+\input{exercise8.tex}
+
+
+\input{append.tex}
+\end{document}
+
+
+

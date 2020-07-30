@@ -1,0 +1,84 @@
+\newpage
+\section*{Exercise 4 (Comments by Qahir)}
+The pseudo-code on figure \ref{fig:figw4} describes the general idea behind how the the discrete event simulation for the blocking system with $n$ service units and no waiting room was implemented. The results for different arrival and system distributions can be seen on table \ref{tab:week4}. Also included are relevant comments to each of the implementations at the end of this section. The burn-in period was set to be $1000$. 
+
+Now for describing the pseudo code. We let $\bm{S}_n$ be an $n$-dimensional vector where each index $i$ corresponds to one of the $n$ working units. We let $T$ be the variable denoting the clock. Let $N$ be the total number of samples, let $A(\bm{\theta}_1)$ be the distribution of the arrival process with parameters $\theta_1$ and $S(\bm{\theta}_2)$ be the distribution of the service system with parameters $\bm{\theta}_2$. Also denote as the total number of rejections $R$. The pseudo-code can be seen on figure \ref{fig:figw4}. 
+
+
+\begin{figure}[H]
+    \hrule
+    \vspace*{0.2cm}
+    \begin{enumerate}
+    \item Initialize $\bm{S}_n \leftarrow \bm{0}_n$, $T \leftarrow 0$ and $R \leftarrow 0$ 
+    \item Simulate $X \sim A(\bm{\theta}_1)$ and set $T \leftarrow  T + X$
+    \item If $\text{min}(\boldsymbol{S}_n) < T$:
+    \begin{enumerate}
+        \item Simulate $Y \sim S(\bm{\theta}_2)$
+        \item Find the index of $\text{min}(\boldsymbol{S}_n)$ and denote this element by $m$
+        \item Set $\bm{S}_n[m] \leftarrow T + S$ 
+    \end{enumerate}
+    \item Else if current iteration is above burn-in period:
+    \begin{enumerate}
+        \item Set $R \leftarrow R + 1$
+    \end{enumerate}
+    \item Repeat steps (2) - (4) $N-1$ times 
+    \end{enumerate}
+    \vspace*{0.2cm}
+    \hrule
+    \vspace*{0.2cm}
+    \caption{Pseudo-code for discrete event simulation for blocking system.}
+    \label{fig:figw4}
+\end{figure}
+
+
+
+
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+ Method & Lower CI & Estimate & Upper CI  \\ \hline
+ Erlangs B-formula & & 0.122 & \\ \hline
+ Exponential inter-arrival and service process  & 0.1179  & 0.1205 & 0.1230  \\ \hline
+ Erlang inter arrival(k = 1, $\mu = 1$)& 0.1201 & 0.1246  & 0.1290\\ \hline
+ Erlang inter arrival(k = 2,$\mu = 0.5$)& 0.0903 & 0.0920  & 0.0936 \\ \hline
+  Erlang inter arrival(k = 3,$\mu = 0.33$)& 0.0806 & 0.0832  & 0.0857 \\ \hline
+ Erlang inter arrival(k = 4,$\mu = 0.25$)& 0.0728 & 0.0757  & 0.0785 \\ \hline
+ Hyper exponential arrival & 0.1339 & 0.1383 & 0.1427 \\ \hline
+ Pareto service(k=1.05, $\beta=0.38$) & 0.0003 & 0.0022 &  0.0041  \\ \hline
+ Pareto service(k=2.05, $\beta=4.1$)&0.1160&0.1201&0.1241\\ \hline
+Constant time service(8 time units)&0.1215  & 0.1242 & 0.1269 \\ \hline
+ Log Normal service($\sigma = 1, \mu = 3 \log(2) - \frac{1}{2}$) &0.1202 & 0.1217 & 0.12315  \\ \hline 
+
+\end{tabular}
+\caption{For log normal we ran $100$K samples because of long burn-in. }
+\label{tab:week4}
+\end{table}
+
+We see that for the cases with exponential arrivals the CI corresponds to the result of Erlangs B-formula except for Pareto with $k=1.05$. Performing inference on the Pareto with this value of $k$ is particularly troublesome since the expectation is not defined $(\infty)$ for $k \leq 2$.
+
+\subsection*{Comments}
+
+\subsubsection*{Erlang, Pareto and constant time (Sen)}
+The arrival process is then described using Erlang distribution. In the case of $k=1$, Erlang distribution simplifies into exponential distribution. The result is similar to that from exponential distribution earlier. For the case of varying k value, corresponding $\mu$ can be stated as:
+\begin{equation}
+    k \times \mu = 1
+\end{equation}
+where the scale, $\mu$ is the reciprocal of the rate $\lambda$.
+
+Pareto distribution and constant time are both used to simulate the service time. In Pareto distribution, the expectation is:
+\begin{equation}
+\mathbb{E}(X)=\frac{k}{k-1} \beta = 8
+\end{equation}
+where k is the shape and $\beta$ is the scale. Using this equation, $\beta$ can be determined as 0.38 and 4.1 for k=1.05 and k=2.05, respectively.
+
+For the constant time of service, it is quite simple and straightforward that the service time is all assumed as 8 unit time.
+
+\subsubsection*{Log-normal (Qahir)}
+We would like to fit this distribution so that one gets a similar result correspond to when one uses Erlangs B-formula for exponential inter-arrival and service process. To do this we have to ensure that the mean of the log-normal distribution is $8$. In our parameterization the log-normal distribution takes $2$ parameters $\sigma$ and $\mu$. Here we fix $\sigma=1$ and according to \footnote{\url{https://en.wikipedia.org/wiki/Log-normal_distribution}} there will be the following correspondence between the mean of the log-normal distribution and our parameters.
+
+\begin{equation}
+    8 = \exp(\mu + \frac{\sigma^2}{2}) \Rightarrow \mu = \text{log}(8) - \frac{1}{2}
+\end{equation}

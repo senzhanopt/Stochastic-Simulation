@@ -1,0 +1,17 @@
+\section*{Exercise 8 (comments by Sen)}
+\subsection*{Ross Chapter 7 Exercise 13}
+The way we estimate p is that: First, we simulate a set of length n by taking samples with replacement, and we can calculated the mean value of the generated set. Second, we repeat the first step several times so we get several mean values. Three, using these mean values we can calculated the mean and variance. Four, we assume that the mean has a normal distribution with the above mean and variance. Finally, we use the aforementioned normal distribution to calculated the prpbability. The algorithm is as follows, getting a mean of 76.90 and a variance of 4.92. The mean of the initial set is 76.7, then we can calculated a probability of 0.975.
+
+\subsection*{Subroutine}
+The algorithm is similar to that above. The only difference is that we take median value of the generated replicates. Then we get the wanted number of medians. Using which we can calculate the mean and the variance, shown as the following code. Random variates from pareto distribution are generated. The results are shown in table \ref{tab:ex8}. Since the confidence interval with median value is wider than that of mean value, mean value has higher precision.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|} \hline
+         & Sample  & Bootstrap  & Bootstrap variance & Confidence interval\\ \hline
+       Mean  &8.87 & 6.69 &0.2938 & [6.59, 6.80]\\ \hline
+       Median  & 2.11& 2.69 &0.6214 & [2.53, 2.84]\\ \hline
+    \end{tabular}
+    \caption{Results from Bootstrap and from sample}
+    \label{tab:ex8}
+\end{table}
